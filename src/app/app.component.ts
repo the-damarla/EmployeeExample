@@ -11,9 +11,36 @@ export class AppComponent implements OnInit {
   title = 'fetchProject';
   li:any;
   lis=[];
-  constructor(private http : HttpClient){
-     
-}
+  constructor(private http : HttpClient){}
+  getSearchedEmployees(text:any)
+  {
+    var cur = 0
+    let elements = document.querySelectorAll(".employee-name");
+    let flag = 0
+    elements.forEach((element) => 
+    {
+        if (element.innerHTML.includes(text.toUpperCase()))
+        {
+          document.getElementById('empDiv'+cur)!.style.display="inherit"
+          flag++;
+        } 
+        else 
+        {
+          document.getElementById('empDiv'+cur)!.style.display="none"
+        }
+        cur++
+    });
+    document.getElementById('showError')!.style.marginTop = "10px"
+    document.getElementById('showError')!.style.color = "red"
+    if(flag == 0)
+    {
+      document.getElementById('showError')!.style.display = "inherit"
+      document.getElementById('showError')!.innerHTML = "* Nothing TO Show *"
+    }
+    else{
+      document.getElementById('showError')!.style.display = "none"
+    }
+  }
  
   ngOnInit(): void {
     this.http.get('http://www.mocky.io/v2/5ea172973100002d001eeada').subscribe(Response => {
@@ -34,7 +61,6 @@ export class AppComponent implements OnInit {
 
     searchtext?.addEventListener('click',(e)=>{
       let inputValue = (document.getElementById('searchText') as HTMLInputElement).value.trim();
-      getSearchedEmployees(inputValue,this.lis)
     })
 
 
@@ -94,36 +120,6 @@ export class AppComponent implements OnInit {
       target!.appendChild(document.createTextNode(attribute));
       target!.innerHTML += "<b>" + text + "</b>"
       target!.innerHTML += "<br>"
-    }
-
-    function getSearchedEmployees(text: any, lis: any)
-    {
-    var cur = 0
-    let elements = document.querySelectorAll(".employee-name");
-    let flag = 0
-    elements.forEach((element, index) => 
-    {
-        if (element.innerHTML.includes(text.toUpperCase()))
-        {
-          document.getElementById('empDiv'+cur)!.style.display="inherit"
-          flag++;
-        } 
-        else 
-        {
-          document.getElementById('empDiv'+cur)!.style.display="none"
-        }
-        cur++
-    });
-    document.getElementById('showError')!.style.marginTop = "10px"
-    document.getElementById('showError')!.style.color = "red"
-    if(flag == 0)
-    {
-      document.getElementById('showError')!.style.display = "inherit"
-      document.getElementById('showError')!.innerHTML = "* Nothing TO Show *"
-    }
-    else{
-      document.getElementById('showError')!.style.display = "none"
-    }
     }
   }
 }

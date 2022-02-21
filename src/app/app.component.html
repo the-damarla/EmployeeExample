@@ -1,7 +1,7 @@
 <h1 class="top" style="margin-top: 20px;">Registered Employees</h1>
 <div class="top">
-  <input type="text" id="searchText" title="search" placeholder="search Employee From Here..!">
-  <button type="button" mat-button id="goSearch" class="btn btn-primary" onkeyup="getSearchedEmployees()">Submit</button>
+  <input type="text" #searchText placeholder="search Employee From Here..!" (keyup)="getSearchedEmployees(searchText.value)">
+  <button type="button" mat-button id="goSearch" class="btn btn-primary">Submit</button>
   <label id="showError"></label>
 </div>
 <div class="d-flex justify-content-center">
